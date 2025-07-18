@@ -97,4 +97,53 @@ legend {
     width: 18px;
     height: 18px;
 }
+
+/* ในไฟล์ public/styles.css (เพิ่มต่อท้าย) */
+
+.disclaimer-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* เพิ่มระยะห่างระหว่างไอคอนกับข้อความ */
+    
+    background-color: var(--risk-high-bg, #f8d7da); /* ใช้สีพื้นหลังเดียวกับความเสี่ยงสูง */
+    color: #58151c; /* สีข้อความที่เข้มขึ้นเพื่อให้อ่านง่าย */
+    
+    padding: 1.5rem;
+    margin-top: 2.5rem; /* ดันให้ห่างจากเนื้อหาด้านบนมากขึ้น */
+    
+    border: 2px solid var(--risk-high, #dc3545); /* เพิ่มขอบให้เด่น */
+    border-radius: 16px; /* ทำให้มุมมนเข้ากับดีไซน์โดยรวม */
+
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.15); /* เพิ่มเงาจางๆ */
+}
+
+.disclaimer-icon {
+    font-size: 3rem; /* ขนาดไอคอนใหญ่พิเศษ */
+    line-height: 1;
+    animation: bounce 2s infinite; /* เพิ่ม animation ให้ดุ๊กดิ๊ก */
+}
+
+.disclaimer-content strong {
+    font-size: 1.2rem;
+    display: block; /* ทำให้ขึ้นบรรทัดใหม่ */
+    margin-bottom: 0.5rem;
+}
+
+.disclaimer-content p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Animation สำหรับไอคอน */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

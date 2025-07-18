@@ -77,7 +77,13 @@ export function displayResult(data) {
 
         <h3 class="section-title">สัญญาณอันตราย</h3>
         <ul class="styled-list red-flags">${createBulletedList(redFlags)}</ul>
-        <div style="...">${analysis.disclaimer ?? 'โปรดปรึกษาแพทย์'}</div>
+        <aside class="disclaimer-card">
+            <div class="disclaimer-icon">⚠️</div>
+            <div class="disclaimer-content">
+                <strong>ข้อควรระวังสำคัญ</strong>
+                <p>${analysis.disclaimer ?? 'การประเมินนี้สร้างโดย AI เพื่อให้คำแนะนำเบื้องต้นเท่านั้น ไม่สามารถใช้แทนการวินิจฉัยจากแพทย์ได้ กรุณาปรึกษาบุคลากรทางการแพทย์เพื่อรับการวินิจฉัยและการรักษาที่ถูกต้อง'}</p>
+            </div>
+        </aside>
         <button id="reset-button" class="main-button">ประเมินอีกครั้ง</button>
     `;
 }
