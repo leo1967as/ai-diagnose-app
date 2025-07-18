@@ -51,4 +51,50 @@ ul.styled-list li { padding-left: 2em; text-indent: -2em; margin-bottom: 0.5rem;
 ul.styled-list li::before { content: '✓'; color: #28a745; margin-right: 0.75em; font-weight: bold; }
 .red-flags li::before { content: '⚠️'; color: #dc3545; }
 
+/* ในไฟล์ public/styles.css (เพิ่มโค้ดนี้ต่อท้าย) */
+
+.symptom-category {
+    margin-bottom: 1.5rem;
+}
+
+fieldset {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+legend {
+    font-weight: 700;
+    color: var(--primary-color);
+    padding: 0 0.75rem;
+    font-size: 1.1rem;
+}
+
+.symptom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.symptom-grid label {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #e9ecef;
+}
+
+.symptom-grid label:hover {
+    background-color: #e8f0fe;
+    border-color: var(--primary-color);
+}
+
+.symptom-grid input[type="checkbox"] {
+    margin-right: 0.75rem;
+    width: 18px;
+    height: 18px;
+}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

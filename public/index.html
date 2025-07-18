@@ -39,12 +39,63 @@
                     <div class="form-group"><label for="weight">น้ำหนัก (กก.)</label><input type="number" id="weight" step="0.1" placeholder="เช่น 65.5" required></div>
                     <div class="form-group"><label for="height">ส่วนสูง (ซม.)</label><input type="number" id="height" placeholder="เช่น 170" required></div>
                 </div>
-                <h3 class="section-title">อาการปัจจุบัน</h3>
-                <div class="form-grid">
-                    <div class="form-group full-span">
-                        <label for="symptoms">อธิบายอาการที่เป็นอยู่ให้ละเอียดที่สุด</label>
-                        <textarea id="symptoms" rows="5" placeholder="เช่น: ปวดหัวบริเวณขมับซ้ายมา 2 วัน ปวดแบบตุบๆ เป็นๆ หายๆ มีอาการคลื่นไส้เล็กน้อย แต่ไม่มีไข้ และไม่ได้ทานยาอะไร" required></textarea>
-                    </div>
+                <h3 class="section-title">อาการหลัก (เลือกได้มากกว่า 1 ข้อ)</h3>
+                <div class="symptom-category">
+                    <fieldset>
+                        <legend>อาการทั่วไป</legend>
+                        <div class="symptom-grid">
+                            <label><input type="checkbox" name="symptom" value="มีไข้"> มีไข้</label>
+                            <label><input type="checkbox" name="symptom" value="อ่อนเพลีย/ไม่มีแรง"> อ่อนเพลีย/ไม่มีแรง</label>
+                            <label><input type="checkbox" name="symptom" value="ปวดเมื่อยตามตัว"> ปวดเมื่อยตามตัว</label>
+                            <label><input type="checkbox" name="symptom" value="หนาวสั่น"> หนาวสั่น</label>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- หมวดหมู่: ศีรษะและลำคอ -->
+                <div class="symptom-category">
+                    <fieldset>
+                        <legend>ศีรษะและลำคอ</legend>
+                        <div class="symptom-grid">
+                            <label><input type="checkbox" name="symptom" value="ปวดศีรษะ"> ปวดศีรษะ</label>
+                            <label><input type="checkbox" name="symptom" value="เวียนศีรษะ/บ้านหมุน"> เวียนศีรษะ/บ้านหมุน</label>
+                            <label><input type="checkbox" name="symptom" value="เจ็บคอ"> เจ็บคอ</label>
+                            <label><input type="checkbox" name="symptom" value="คัดจมูก/น้ำมูกไหล"> คัดจมูก/น้ำมูกไหล</label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- หมวดหมู่: ระบบทางเดินหายใจ -->
+                <div class="symptom-category">
+                    <fieldset>
+                        <legend>ระบบทางเดินหายใจ</legend>
+                        <div class="symptom-grid">
+                            <label><input type="checkbox" name="symptom" value="ไอแห้ง"> ไอแห้ง</label>
+                            <label><input type="checkbox" name="symptom" value="ไอมีเสมหะ"> ไอมีเสมหะ</label>
+                            <label><input type="checkbox" name="symptom" value="หายใจลำบาก/หายใจถี่"> หายใจลำบาก/หายใจถี่</label>
+                            <label><input type="checkbox" name="symptom" value="เจ็บหน้าอก"> เจ็บหน้าอก</label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- หมวดหมู่: ระบบทางเดินอาหาร -->
+                <div class="symptom-category">
+                    <fieldset>
+                        <legend>ระบบทางเดินอาหาร</legend>
+                        <div class="symptom-grid">
+                            <label><input type="checkbox" name="symptom" value="ปวดท้อง"> ปวดท้อง</label>
+                            <label><input type="checkbox" name="symptom" value="คลื่นไส้/อาเจียน"> คลื่นไส้/อาเจียน</label>
+                            <label><input type="checkbox" name="symptom" value="ท้องเสีย"> ท้องเสีย</label>
+                            <label><input type="checkbox" name="symptom" value="ท้องผูก"> ท้องผูก</label>
+                            <label><input type="checkbox" name="symptom" value="ท้องอืด"> ท้องอืด</label>
+                        </div>
+                    </fieldset>
+                </div>
+
+
+                <!-- ช่องอธิบายเพิ่มเติม (สำคัญ) -->
+                <div class="form-group full-span" style="margin-top: 1.5rem;">
+                    <label for="other-symptoms">อาการอื่นๆ เพิ่มเติม (ถ้ามี)</label>
+                    <textarea id="other-symptoms" rows="4" placeholder="กรุณาอธิบายรายละเอียดเพิ่มเติม เช่น ตำแหน่งที่ปวด, ปวดแบบไหน, เป็นมานานเท่าไหร่"></textarea>
                 </div>
                 <button type="submit" class="main-button">ส่งข้อมูลเพื่อวิเคราะห์</button>
             </form>
@@ -66,6 +117,6 @@
 </main>
 
 <!-- Link to external JavaScript file -->
-<script src="app.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
