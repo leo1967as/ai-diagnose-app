@@ -35,7 +35,11 @@ healthForm.addEventListener('submit', async (e) => {
         sex: document.querySelector('input[name="sex"]:checked').value,
         weight: document.getElementById('weight').value,
         height: document.getElementById('height').value,
-        symptoms: finalSymptoms
+        symptoms: finalSymptoms,
+        // ▼▼▼ ส่วนที่เพิ่มเข้ามา ▼▼▼
+        symptom_duration: document.getElementById('symptom-duration').value,
+        previous_meal: document.getElementById('previous-meal').value || 'ไม่ได้ระบุ' 
+        // || 'ไม่ได้ระบุ' เพื่อป้องกันค่าว่าง
     };
 
     try {
