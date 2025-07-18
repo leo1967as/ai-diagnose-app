@@ -23,7 +23,9 @@ export function getProfileFromForm() {
     return {
         chronic_conditions: conditions,
         drug_allergy: document.getElementById('drug-allergy').value,
-        lifestyle_factors: lifestyle
+        lifestyle_factors: lifestyle,
+        additional_notes: document.getElementById('profile-notes').value 
+
     };
 }
 
@@ -40,5 +42,11 @@ export function populateProfileForm() {
             if (el) el.checked = true;
         });
         document.getElementById('drug-allergy').value = profile.drug_allergy || '';
-    }
+                document.getElementById('profile-notes').value = profile.additional_notes || '';
+
+            }
+            else {
+                // เพิ่มการเคลียร์ฟอร์ม กรณีไม่มี profile ที่บันทึกไว้
+                document.getElementById('profile-form').reset();
+           }
 }
