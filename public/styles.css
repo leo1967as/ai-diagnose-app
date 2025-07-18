@@ -1,0 +1,54 @@
+/* File: public/styles.css */
+:root {
+    --primary-color: #007bff; --primary-hover: #0056b3; --background-color: #f4f7f9;
+    --card-background: #fff; --text-color: #343a40; --heading-color: #004a7c;
+    /* Risk Colors */
+    --risk-high: #dc3545; --risk-medium: #fd7e14; --risk-low: #ffc107; --risk-info: #0dcaf0;
+    --risk-high-bg: #f8d7da; --risk-medium-bg: #fff3cd; --risk-low-bg: #fff9e6; --risk-info-bg: #cff4fc;
+}
+* { box-sizing: border-box; }
+body { font-family: 'Sarabun', sans-serif; background-color: var(--background-color); color: var(--text-color); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 2rem; line-height: 1.7; }
+.container { width: 100%; max-width: 800px; }
+.card { background-color: var(--card-background); padding: 2.5rem; border-radius: 16px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); margin-bottom: 2rem; }
+h1, h2 { text-align: center; color: var(--heading-color); }
+h3.section-title { font-size: 1.4rem; color: var(--heading-color); border-bottom: 3px solid #eef2f5; padding-bottom: 0.75rem; margin-top: 2rem; margin-bottom: 1.5rem; }
+
+/* Form */
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+.form-group { display: flex; flex-direction: column; }
+.full-span { grid-column: 1 / -1; }
+label { margin-bottom: 0.5rem; font-weight: 700; }
+input[type="text"], input[type="number"], textarea { width: 100%; padding: 14px; font-size: 1rem; border-radius: 8px; border: 1px solid #ced4da; font-family: 'Sarabun', sans-serif; }
+textarea { resize: vertical; min-height: 120px; }
+.radio-group { display: flex; gap: 20px; align-items: center; }
+
+.main-button { background-color: var(--primary-color); color: white; border: none; font-weight: 700; cursor: pointer; transition: all 0.3s; width: 100%; margin-top: 2rem; padding: 16px; font-size: 1.2rem; border-radius: 12px; }
+.main-button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+.main-button:disabled { background-color: #aaa; cursor: not-allowed; }
+
+/* Results & States */
+#result-wrapper, #loading-wrapper, #error-wrapper { display: none; }
+.loader { border: 5px solid #f3f3f3; border-top: 5px solid var(--primary-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 3rem auto; }
+
+.result-header { text-align: center; margin-bottom: 2rem; }
+.bmi-display { display: inline-block; background-color: #e9ecef; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; }
+
+.risk-card { display: flex; flex-direction: column; gap: 0.75rem; border: 1px solid #e0e0e0; padding: 1.25rem; margin-bottom: 1rem; border-radius: 12px; border-left-width: 8px; }
+.risk-card[data-risk="high"] { border-left-color: var(--risk-high); background-color: var(--risk-high-bg);}
+.risk-card[data-risk="medium"] { border-left-color: var(--risk-medium); background-color: var(--risk-medium-bg); }
+.risk-card[data-risk="low"] { border-left-color: var(--risk-low); background-color: var(--risk-low-bg); }
+.risk-card[data-risk="info"] { border-left-color: var(--risk-info); background-color: var(--risk-info-bg); }
+
+.risk-card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.2rem; font-weight: 700;}
+.risk-label { text-transform: uppercase; font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; color: white; }
+.risk-label[data-risk="high"] { background-color: var(--risk-high); }
+.risk-label[data-risk="medium"] { background-color: var(--risk-medium); }
+.risk-label[data-risk="low"] { background-color: var(--risk-low); }
+.risk-label[data-risk="info"] { background-color: var(--risk-info); color: #333}
+
+.primary-analysis { background-color: #e8f0fe; padding: 1.5rem; border-radius: 12px; font-size: 1.1rem; }
+ul.styled-list li { padding-left: 2em; text-indent: -2em; margin-bottom: 0.5rem; list-style: none;}
+ul.styled-list li::before { content: '✓'; color: #28a745; margin-right: 0.75em; font-weight: bold; }
+.red-flags li::before { content: '⚠️'; color: #dc3545; }
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
