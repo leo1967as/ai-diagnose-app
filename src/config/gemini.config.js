@@ -11,7 +11,10 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ลบ generationConfig ออก เพื่อปิดการใช้งาน JSON Mode
 const diagnosisModel = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash"
+    model: "gemini-1.5-flash",
+        generationConfig: {
+      temperature: 0.2, // ลดความคิดสร้างสรรค์ บังคับให้ยึดตามโครงสร้าง
+    }
 });
 
 export { diagnosisModel };
