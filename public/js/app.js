@@ -8,7 +8,10 @@ import * as profile from './profile.service.js'; // <-- Import service ใหม
 const healthForm = document.getElementById('health-form');
 const otherSymptomsTextarea = document.getElementById('other-symptoms');
 const appCard = document.getElementById('app-card');
-
+const openProfileButton = document.getElementById('open-profile-button');
+const profileModal = document.getElementById('profile-modal');
+const closeModalButton = document.getElementById('close-modal');
+const profileForm = document.getElementById('profile-form');
 // --- Event Listeners ---
 
 // จัดการการส่งฟอร์ม
