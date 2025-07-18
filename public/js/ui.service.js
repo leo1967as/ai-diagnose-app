@@ -33,7 +33,9 @@ export function displayResult(data) {
         <h4>ข้อแนะนำด้านกิจกรรม</h4>
         <p><strong>ที่แนะนำ:</strong> ${analysis.personalized_care.activity_guidance.recommended.join(', ')}</p>
         <p><strong>ที่ควรเลี่ยง:</strong> ${analysis.personalized_care.activity_guidance.to_avoid.join(', ')}</p>
-
+        <h4>ข้อแนะนำด้านกิจกรรม</h4>
+        <p><strong>ที่แนะนำ:</strong> ${activityGuidance?.recommended?.join(', ') ?? 'ไม่มีคำแนะนำเฉพาะ'}</p>
+        <p><strong>ที่ควรเลี่ยง:</strong> ${activityGuidance?.to_avoid?.join(', ') ?? 'ไม่มีคำแนะนำเฉพาะ'}</p>
         <h3 class="section-title">คำแนะนำด้านโภชนาการ</h3>
         <p><i>${analysis.dietary_recommendations.concept}</i></p>
         <div class="diet-recommendations">
