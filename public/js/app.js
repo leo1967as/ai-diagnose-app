@@ -2,6 +2,7 @@
 
 import api from './api.service.js';
 import * as ui from './ui.service.js';
+import * as profile from './profile.service.js'; // <-- Import service ใหม่
 
 // --- Element References ---
 const healthForm = document.getElementById('health-form');
@@ -38,8 +39,10 @@ healthForm.addEventListener('submit', async (e) => {
         symptoms: finalSymptoms,
         // ▼▼▼ ส่วนที่เพิ่มเข้ามา ▼▼▼
         symptom_duration: document.getElementById('symptom-duration').value,
-        previous_meal: document.getElementById('previous-meal').value || 'ไม่ได้ระบุ' 
+        previous_meal: document.getElementById('previous-meal').value || 'ไม่ได้ระบุ' ,
         // || 'ไม่ได้ระบุ' เพื่อป้องกันค่าว่าง
+                health_profile: profile.loadProfile()
+
     };
 
     try {
@@ -50,6 +53,29 @@ healthForm.addEventListener('submit', async (e) => {
         ui.displayError(error.message);
         ui.showView('error-wrapper');
     }
+});
+
+// -- listeners สำหรับ Profile Modal --
+openProfileButton.addEventListener('click', () => {
+    profile.populateProfileForm(); // เติมข้อมูลเก่าก่อนแสดง
+    profileModal.style.display = 'flex';
+});
+
+closeModalButton.addEventListener('click', () => {
+    profileModal.style.display = 'none';
+});
+
+profileModal.addEventListener('click', (e) => {
+    if (e.target === profileModal) { // ปิดเมื่อคลิกที่พื้นหลังสีเทา
+        profileModal.style.display = 'none';
+    }
+});
+
+profileForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const profileData = profile.getProfileFromForm();
+    profile.saveProfile(profileData);
+    profileModal.style.display = 'none';
 });
 
 // จัดการปัญหาคีย์บอร์ดมือถือ
