@@ -2,6 +2,11 @@
   "version": 2,
   "builds": [
     {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "public" }
+    },
+    {
       "src": "src/server.js",
       "use": "@vercel/node"
     }
@@ -10,18 +15,6 @@
     {
       "src": "/api/(.*)",
       "dest": "src/server.js"
-    },
-    {
-      "src": "/(.*\\.(css|js|ico|png|jpg|jpeg|gif|svg))$",
-      "dest": "public/$1"
-    },
-    {
-      "src": "/(.*)",
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "public/index.html"
     }
   ]
 }
