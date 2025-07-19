@@ -1,6 +1,7 @@
 // File: public/js/api.service.js
 
-const API_URL = 'http://localhost:3000/api/assess';
+// const API_URL = 'http://localhost:3000/api/assess';
+const API_URL = '/api/assess';
 
 async function getAiAssessment(formData) {
     try {

@@ -13,8 +13,6 @@ export function displayResult(data) {
     // 1. ติดตั้งกล้องวงจรปิด
         console.log("✅ [Frontend] ได้รับข้อมูลจาก API และกำลังจะแสดงผล:", JSON.stringify(data, null, 2));
 
-    console.log("Inspecting AI Response Data:", JSON.stringify(data, null, 2));
-
     // 2. สร้างบังเกอร์: ดึงข้อมูลออกมาอย่างปลอดภัยที่สุด
     // ถ้า data หรือ analysis ไม่มีอยู่ ให้ใช้ Object ว่างๆ แทน
     const analysis = data?.analysis ?? {}; 
