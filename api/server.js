@@ -2,7 +2,7 @@
 import 'dotenv/config'; // ต้อง import ก่อนใครเพื่อน
 import express from 'express';
 import cors from 'cors'; // import cors
-import diagnosisRoutes from './src/api/diagnosis.routes.js';
+import diagnosisRoutes from '../src/api/diagnosis.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
