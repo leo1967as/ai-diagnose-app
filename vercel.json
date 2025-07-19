@@ -9,19 +9,19 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/src/server.js"
+      "dest": "src/server.js"
     },
     {
-      "src": "/js/(.*)",
-      "dest": "/public/js/$1"
-    },
-    {
-      "src": "/(.*\\.(css|ico|png|jpg|jpeg|gif|svg))",
-      "dest": "/public/$1"
+      "src": "/(.*\\.(css|js|ico|png|jpg|jpeg|gif|svg))$",
+      "dest": "public/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.html"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "public/index.html"
     }
   ]
 }
