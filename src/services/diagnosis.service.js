@@ -67,7 +67,7 @@ async function getAiAnalysis(userData) {
         },
         "dietary_recommendations": {
           "concept": "ต้องอธิบายแนวคิดการทานอาหารที่สอดคล้องกับทั้ง 'อาการปัจจุบัน' และข้อมูลใน 'โปรไฟล์สุขภาพ'",
-          "foods_to_eat": { ... },
+          "foods_to_eat": { "main_dishes": ["..."], "snacks_and_fruits": ["..."], "drinks": ["..."] },
           "foods_to_avoid": ["ต้องมีเหตุผลที่เชื่อมโยงกับข้อมูลใน 'โปรไฟล์สุขภาพ'"]
         },
         "red_flags": ["ต้องมีสัญญาณอันตรายอย่างน้อย 1 ข้อที่เกี่ยวข้องกับข้อมูลใน 'โปรไฟล์สุขภาพ'"],
@@ -82,6 +82,8 @@ async function getAiAnalysis(userData) {
       4.  ต้องสร้าง JSON ให้ครบทุกฟิลด์ ห้ามขาดหรือเกิน
       5.  เนื้อหาต้องปลอดภัย ห้ามวินิจฉัยโรค และ**ห้ามแนะนำให้ซื้อหรือใช้ยาใดๆ ทั้งสิ้น**
       6.  ปฏิบัติได้จริง: คำแนะนำต้องชัดเจนและนำไปใช้ในชีวิตประจำวันได้
+      7.  ตอบเป็นภาษาไทยเท่านั้น
+      8.  สำหรับ "foods_to_eat" ต้องมีข้อมูลในทุกหมวดหมู่: "main_dishes" (อาหารหลัก), "snacks_and_fruits" (ของว่าง/ผลไม้), และ "drinks" (เครื่องดื่ม)
       
     `;
     const result = await diagnosisModel.generateContent(prompt);
@@ -128,7 +130,7 @@ async function getAiAssessment(userData) {
                 primary_assessment: "ไม่สามารถสร้างบทวิเคราะห์จาก AI ได้ เนื่องจากปัญหาการเชื่อมต่อเซิร์ฟเวอร์ชั่วคราว",
                 risk_analysis: [ { condition: "การเชื่อมต่อ AI ขัดข้อง", risk_level: "info", rationale: "ระบบไม่สามารถติดต่อ AI เพื่อทำการวิเคราะห์ความเสี่ยงได้ในขณะนี้" } ],
                 self_care: ["โปรดลองอีกครั้งในภายหลัง", "หากอาการน่ากังวล ควรปรึกษาแพทย์โดยตรง"],
-                dietary_recommendations: { foods_to_eat: [], foods_to_avoid: [] },
+                dietary_recommendations: { foods_to_eat: { main_dishes: [], snacks_and_fruits: [], drinks: [] }, foods_to_avoid: [] },
                 red_flags: ["หากอาการแย่ลงอย่างรวดเร็ว ควรรีบไปพบแพทย์ทันที"],
                 disclaimer: `เกิดข้อผิดพลาดในการสื่อสารกับ AI หลังจากพยายาม ${maxRetries} ครั้ง: ${lastAiError.message}`
         };
