@@ -92,13 +92,13 @@ async function getAiAnalysis(userData) {
 // --- The Main Public Function of this Service ---
 // นี่คือฟังก์ชันที่ Controller จะเรียกใช้
 async function getAiAssessment(userData) {
-    const { name, age, sex, weight, height, symptoms } = userData;
+    const { name, age, sex, weight, height, symptoms, health_profile, symptom_duration, previous_meal } = userData;
 
     console.log(`[Service] เริ่มกระบวนการสำหรับ: ${name}`);
     const bmi = calculateBMI(weight, height);
     console.log(`[Service] คำนวณ BMI ได้: ${bmi.value} (${bmi.category})`);
 
-    const dataForAI = { name, age, sex, bmi, symptoms };
+    const dataForAI = { name, age, sex, bmi, symptoms, health_profile, symptom_duration, previous_meal };
 
     let analysis;
     let lastAiError = null;
@@ -137,7 +137,7 @@ async function getAiAssessment(userData) {
     // Service คืนผลลัพธ์ทั้งหมดเป็น Object เดียว
     return {
         userInfo: { name, age, sex },
-        bmi: bmi,
+        bmi: { ...bmi, weight, height },
         analysis: analysis
     };
 }

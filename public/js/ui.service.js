@@ -15,9 +15,9 @@ export function displayResult(data) {
 
     // 2. สร้างบังเกอร์: ดึงข้อมูลออกมาอย่างปลอดภัยที่สุด
     // ถ้า data หรือ analysis ไม่มีอยู่ ให้ใช้ Object ว่างๆ แทน
-    const analysis = data?.analysis ?? {}; 
+    const analysis = data?.analysis ?? {};
     const userInfo = data?.userInfo ?? { name: 'ผู้ใช้' };
-    const bmi = data?.bmi ?? { value: 'N/A', category: 'ไม่สามารถคำนวณได้' };
+    const bmi = data?.bmi ?? { value: 'N/A', category: 'ไม่สามารถคำนวณได้', weight: 'N/A', height: 'N/A' };
 
     // ดึงข้อมูลย่อยออกมาพร้อมค่า Default ที่แข็งแกร่งที่สุด
     const personalizedCare = analysis.personalized_care ?? {};
@@ -41,7 +41,7 @@ export function displayResult(data) {
     resultContainer.innerHTML =  `
         <div class="result-header">
             <h2>ผลการวิเคราะห์เบื้องต้นสำหรับคุณ ${userInfo.name}</h2>
-            <p class="bmi-display">ดัชนีมวลกาย (BMI): ${bmi.value} (${bmi.category})</p>
+            <p class="bmi-display">น้ำหนัก: ${bmi.weight} กก. | ส่วนสูง: ${bmi.height} ซม.<br> ดัชนีมวลกาย (BMI): ${bmi.value} (${bmi.category})</p>
         </div>
         <h3 class="section-title">บทวิเคราะห์หลัก</h3>
         <div class="primary-analysis">${analysis.primary_assessment ?? 'ไม่พบบทวิเคราะห์หลัก'}</div>
