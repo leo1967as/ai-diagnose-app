@@ -211,3 +211,15 @@ legend {
     from { transform: translateY(-30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
+/* Two-level confirmation button styles */
+.main-button[data-confirm="true"] {
+    background-color: #ff6b6b; /* Different color for confirmation state */
+    transform: scale(1.05); /* Slight scale effect for visual feedback */
+}
+
+.main-button[data-confirm="true"]::after {
+    content: " (คลิกอีกครั้งเพื่อยืนยัน)";
+    font-size: 0.8em;
+    display: block;
+}

@@ -18,6 +18,30 @@ const profileForm = document.getElementById('profile-form');
 healthForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
+    // Handle two-level confirmation
+    const submitButton = document.getElementById('submit-button');
+    if (submitButton.dataset.confirm === "false") {
+        // First click - change button state and start timer
+        submitButton.dataset.confirm = "true";
+        submitButton.textContent = "ยืนยันการส่งข้อมูล";
+        
+        // Set timeout to revert state after 3 seconds
+        submitButton.confirmTimeout = setTimeout(() => {
+            submitButton.dataset.confirm = "false";
+            submitButton.textContent = "ส่งข้อมูลเพื่อวิเคราะห์";
+        }, 3000);
+        
+        // Prevent form submission on first click
+        return;
+    } else {
+        // Second click - clear timeout and proceed with submission
+        clearTimeout(submitButton.confirmTimeout);
+        
+        // Reset button state
+        submitButton.dataset.confirm = "false";
+        submitButton.textContent = "ส่งข้อมูลเพื่อวิเคราะห์";
+    }
+    
     // Client-side validation
     const checkedSymptoms = Array.from(document.querySelectorAll('input[name="symptom"]:checked'));
     const otherSymptomsText = otherSymptomsTextarea.value.trim();
