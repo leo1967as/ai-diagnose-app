@@ -111,8 +111,12 @@ async function generateWithOpenRouter(prompt) {
         // response_format: { "type": "json_object" } 
     };
 
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 25000)
+
     try {
         const response = await fetch(OPENROUTER_ENDPOINT, {
+            signal: controller.signal,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,6 +129,7 @@ async function generateWithOpenRouter(prompt) {
             body: JSON.stringify(body),
         });
 
+        clearTimeout(timeoutId)
         if (!response.ok) {
             const errorBody = await response.text();
             throw new Error(`OpenRouter API request failed with status ${response.status}: ${errorBody}`);
@@ -145,7 +150,11 @@ async function generateWithOpenRouter(prompt) {
         }
 
     } catch (error) {
+        clearTimeout(timeoutId)
         console.error("เกิดข้อผิดพลาดในการเชื่อมต่อ OpenRouter:", error);
+        if (error instanceof DOMException && error.name === 'AbortError') {
+            throw new Error('OpenRouter API request timed out after 25 seconds');
+        }
         throw error;
     }
 }

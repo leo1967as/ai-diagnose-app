@@ -124,24 +124,14 @@ async function getAiAssessment(userData) {
 
     let analysis;
     let lastAiError = null;
-    const maxRetries = 5;
 
-    // Logic การ Retry ที่ยอดเยี่ยมของคุณจะอยู่ที่นี่ ในใจกลางของ Business Logic
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            console.log(`[Service Attempt ${attempt}/${maxRetries}] กำลังเรียกใช้ AI...`);
-            analysis = await getAiAnalysis(dataForAI);
-            console.log(`✅ [Service Attempt ${attempt}] สำเร็จ: วิเคราะห์ AI เรียบร้อย`);
-            lastAiError = null;
-            break; 
-        } catch (aiError) {
-            lastAiError = aiError;
-            console.error(`❌ [Service Attempt ${attempt}] ล้มเหลว: ${aiError.message}`);
-            if (attempt < maxRetries) {
-                const waitTime = 2000;
-                await delay(waitTime);
-            }
-        }
+    try {
+        console.log(`[Service] กำลังเรียกใช้ AI...`);
+        analysis = await getAiAnalysis(dataForAI);
+        console.log(`[Service] สำเร็จ: วิเคราะห์ AI เรียบร้อย`);
+    } catch (aiError) {
+        lastAiError = aiError;
+        console.error(`[Service] ล้มเหลว: ${aiError.message}`);
     }
     // Logic การสร้าง Fallback Response ก็อยู่ที่นี่เช่นกัน
     if (lastAiError) {

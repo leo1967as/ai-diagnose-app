@@ -24,7 +24,7 @@ class ApiService {
           headers: {
             'Content-Type': 'application/json'
           },
-          timeout: 30000, // 30 seconds timeout (เพิ่มจาก 10 เป็น 30 วินาที)
+          timeout: 120000, // 120 seconds timeout
         });
 
         // Check if response is valid JSON
