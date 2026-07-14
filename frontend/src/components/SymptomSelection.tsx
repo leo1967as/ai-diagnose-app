@@ -3,14 +3,18 @@ import React, { useState } from 'react'
 interface SymptomSelectionProps {
   onSymptomsChange: (symptoms: string[]) => void
   onOtherSymptomsChange: (text: string) => void
+  initialSymptoms?: string[]
+  initialOtherSymptoms?: string
 }
 
 const SymptomSelection: React.FC<SymptomSelectionProps> = ({
   onSymptomsChange,
-  onOtherSymptomsChange
+  onOtherSymptomsChange,
+  initialSymptoms = [],
+  initialOtherSymptoms = ''
 }) => {
-  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([])
-  const [otherSymptoms, setOtherSymptoms] = useState('')
+  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>(initialSymptoms)
+  const [otherSymptoms, setOtherSymptoms] = useState(initialOtherSymptoms)
 
   const symptomCategories = [
     {

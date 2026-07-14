@@ -88,6 +88,16 @@ export interface DiagnosisResult {
   locations?: Location[]
 }
 
+// Form History Types
+export interface FormHistoryEntry {
+  id: string
+  timestamp: number
+  label: string
+  formData: Partial<FormData>
+  selectedSymptoms: string[]
+  otherSymptomsText: string
+}
+
 // API Response Types
 export interface APIResponse {
   success: boolean

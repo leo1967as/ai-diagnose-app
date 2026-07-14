@@ -163,6 +163,71 @@ legend {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* History Button */
+.history-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+.history-button:hover {
+    background-color: #f4f7f9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* History Modal */
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.history-item:hover {
+    background-color: #f4f7f9;
+}
+.history-item-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+.history-symptoms {
+    font-size: 0.85rem;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.history-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.history-delete:hover {
+    opacity: 1;
+}
+
 /* Profile Modal */
 .modal-overlay {
     position: fixed;
@@ -202,12 +267,13 @@ legend {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
+}
+
 .nearby-locations-modal {
   max-width: 1200px;
   width: 95%;
   max-height: 90vh;
   overflow-y: auto;
-}
 }
 
 @keyframes slide-down {

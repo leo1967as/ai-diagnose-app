@@ -9,14 +9,22 @@ declare global {
   function gtag(...args: any[]): void;
 }
 
-interface HealthFormProps {
-  onSubmit: (data: FormData) => void
+interface DefaultFormData {
+  formData: Partial<FormData>
+  selectedSymptoms: string[]
+  otherSymptomsText: string
 }
 
-const HealthForm: React.FC<HealthFormProps> = ({ onSubmit }) => {
+interface HealthFormProps {
+  onSubmit: (data: FormData) => void
+  defaultData?: DefaultFormData
+  onSaveHistory?: (formData: Partial<FormData>, selectedSymptoms: string[], otherSymptomsText: string) => void
+}
+
+const HealthForm: React.FC<HealthFormProps> = ({ onSubmit, defaultData, onSaveHistory }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [confirmSubmit, setConfirmSubmit] = useState(false)
-  const [formData, setFormData] = useState<Partial<FormData>>({
+  const [formData, setFormData] = useState<Partial<FormData>>(defaultData?.formData ?? {
     name: '',
     age: 0,
     sex: 'ชาย',
@@ -25,8 +33,8 @@ const HealthForm: React.FC<HealthFormProps> = ({ onSubmit }) => {
     symptom_duration: '',
     previous_meal: ''
   })
-  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([])
-  const [otherSymptomsText, setOtherSymptomsText] = useState('')
+  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>(defaultData?.selectedSymptoms ?? [])
+  const [otherSymptomsText, setOtherSymptomsText] = useState(defaultData?.otherSymptomsText ?? '')
   const [validationError, setValidationError] = useState<string | null>(null)
 
 
@@ -98,6 +106,8 @@ const HealthForm: React.FC<HealthFormProps> = ({ onSubmit }) => {
 
     console.log('HealthForm: Sending form data:', completeFormData);
 
+    onSaveHistory?.(formData, selectedSymptoms, otherSymptomsText)
+
     // Track analyze event
     if (typeof gtag !== 'undefined') {
       gtag('event', 'analyze_submit', {
@@ -153,6 +163,8 @@ const HealthForm: React.FC<HealthFormProps> = ({ onSubmit }) => {
         <SymptomSelection
           onSymptomsChange={handleSelectedSymptomsChange}
           onOtherSymptomsChange={handleOtherSymptomsChange}
+          initialSymptoms={defaultData?.selectedSymptoms}
+          initialOtherSymptoms={defaultData?.otherSymptomsText}
         />
         
         <AdditionalInfoForm
