@@ -117,7 +117,7 @@ async function generateWithOpenRouter(prompt) {
             headers: {
                 'Content-Type': 'application/json',
                 // --- สำคัญ: เพิ่ม Authorization Header ---
-                'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY?.trim()}`,
                 // Header แนะนำโดย OpenRouter เพื่อระบุแอปของคุณ
                 'HTTP-Referer': `http://localhost:${process.env.PORT}`, 
                 'X-Title': `AI Diagnose App`,
