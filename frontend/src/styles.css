@@ -168,8 +168,8 @@ legend {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: none;
-    border: 1px solid #ddd;
+    background: #fff;
+    border: 1px solid #ccc;
     border-radius: 50%;
     width: 36px;
     height: 36px;
@@ -177,7 +177,7 @@ legend {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color);
+    color: #333;
     font-size: 1.2rem;
     transition: all 0.2s ease;
 }

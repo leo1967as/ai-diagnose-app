@@ -156,9 +156,9 @@ async function generateWithOpenRouter(prompt) {
  * @returns {Promise<string>}
  */
 async function generateContent(prompt) {
-    const provider = process.env.AI_PROVIDER || 'gemini';
+    const provider = (process.env.AI_PROVIDER || 'gemini').trim();
 
-     if (provider === 'openrouter') { // <--- เพิ่มเงื่อนไขนี้
+    if (provider === 'openrouter') { // <--- เพิ่มเงื่อนไขนี้
         return generateWithOpenRouter(prompt);
     } else if (provider === 'local') {
         return generateWithLocalLM(prompt);
