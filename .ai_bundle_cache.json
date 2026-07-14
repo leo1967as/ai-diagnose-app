@@ -1,0 +1,23 @@
+{
+  ".ai_bundle_cache.json": "bb0d7266f6f3336408489ee2b865735098ff51cc",
+  ".env": "acb6b50b9c5195ef62550ceefac695433a0d79ad",
+  ".env example": "2500ed447c36380147bbe6018683b78f20df169d",
+  ".gitignore": "fdd5b83085d35347fd416800f0ec933e76e2fc85",
+  "AI_DIAGNOSIS_APP_FUNCTIONALITY.md": "b65269afae5ab0b15b8d9c4c087ec638956ea6e7",
+  "TWO_LEVEL_CONFIRMATION_PLAN.md": "2c43d98c31eb56449a12b0918c0947fe55672ed9",
+  "Todo.txt": "70a124ba20a3a7c22df20ed586e2134bd487badd",
+  "package-lock.json": "7ce9e132498892b17ea59b4413c2a3305cfeacc6",
+  "package.json": "90d91f68e0b66c22198d312a09e83df865a167ef",
+  "server.js": "7d79624f7ba2ff74fdcac02c880bcee3ce882e0a",
+  "src\\api\\diagnosis.routes.js": "40a82cc22046c0f6c72f4faa9b523d1e0e1b3cfd",
+  "src\\config\\firebase.config.js": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "src\\config\\gemini.config.js": "0e4568a7ee0bb2e063206843dbdb5dc294da01c4",
+  "src\\controllers\\diagnosis.controller.js": "942475296bf645c248edc5cb86f76f1df26e4f5e",
+  "src\\middlewares\\errorHandler.middleware.js": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "src\\repositories\\diagnosis.repository.js": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "src\\services\\aiConnector.service.js": "9441f33ae092d54eeec6f3cdff4a38c35c092e0c",
+  "src\\services\\diagnosis.service.js": "a977649a3bb2113118401bf0f05311d9a44f506f",
+  "src\\services\\gemini.config.js": "7e49f110ae273fd87a8e7f5a4b72cf817a17e1bf",
+  "src\\utils\\logger.js": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "vercel.json": "87f5f7cec8f8c918cd0091bdfaacaf4aa1d97b19"
+}

@@ -1,0 +1,24 @@
+/* Import custom styles */
+@import './styles.css';
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.section-frame {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .section-frame {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+}

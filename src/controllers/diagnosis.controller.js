@@ -1,5 +1,6 @@
 // File: src/controllers/diagnosis.controller.js
 import diagnosisService from '../services/diagnosis.service.js';
+import usageRepository from '../repositories/usage.repository.js';
 
 // เปลี่ยนชื่อฟังก์ชันให้สื่อความหมายมากขึ้น
 async function handleAssessmentRequest(req, res, next) {
@@ -20,7 +21,19 @@ async function handleAssessmentRequest(req, res, next) {
         const assessmentResult = await diagnosisService.getAiAssessment(userData);
 
         // ส่งผลลัพธ์ที่ได้จาก Service กลับไปให้ Client
-        res.status(200).json(assessmentResult);
+        console.log(`[Controller] ส่งผลลัพธ์กลับให้ Client สำหรับ: ${name}`);
+        const responseData = { success: true, data: assessmentResult };
+        console.log('[Controller] Response data size:', JSON.stringify(responseData).length, 'characters');
+        res.status(200).json(responseData);
+
+        // Log usage stats asynchronously
+        usageRepository.logAssessment({
+          ...userData,
+          ip: req.ip,
+          userAgent: req.get('User-Agent')
+        }).catch(logError => {
+          console.error('[Controller] Failed to log usage:', logError);
+        });
 
     } catch (error) {
         console.error("[Controller] เกิดข้อผิดพลาดรุนแรง:", error);

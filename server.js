@@ -9,9 +9,16 @@ const PORT = process.env.PORT || 3001;
 
 // --- Middlewares ---
 
-// Define the allowed origin
+// Define the allowed origin for development and production
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? [process.env.FRONTEND_URL || 'https://your-app.vercel.app'] // แทนที่ด้วย URL จริงของ Vercel app
+  : ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://127.0.0.1:5500/']; // รองรับ Vite และเดิม
+
 const corsOptions = {
-  origin: 'https://ai-medic-mockup.vercel.app'
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 // Use the cors middleware with the specific options

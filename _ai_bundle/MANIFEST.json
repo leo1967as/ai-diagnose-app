@@ -1,0 +1,11 @@
+{
+  "generated_at": "2025-08-29 15:05:52",
+  "max_bytes_per_part": 60500000,
+  "parts": [
+    {
+      "file": "PART-001.md",
+      "bytes": 92050
+    }
+  ],
+  "diff_only": false
+}

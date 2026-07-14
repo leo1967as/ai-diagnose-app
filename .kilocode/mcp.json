@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:/GoogleDriveSync/Coding/Website/ai-diagnose-app"
+      ],
+      "alwaysAllow": [
+        "read_media_file"
+      ]
+    }
+  }
+}

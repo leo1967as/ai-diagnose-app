@@ -2,91 +2,120 @@
 
 ## Introduction
 
-The AI Diagnosis Application is a web-based health assessment tool designed to provide users with preliminary health analysis based on their symptoms and personal health information. The application leverages artificial intelligence to offer personalized health recommendations, risk assessments, and care suggestions.
+The AI Diagnosis Application is a full-stack web-based health assessment tool designed to provide users with preliminary health analysis based on their symptoms and personal health information. The application leverages artificial intelligence to offer personalized health recommendations, risk assessments, and care suggestions.
 
-This document provides a high-level overview of the application's main functionality, explaining how users interact with the system and how it processes information to generate health insights.
+This document provides a high-level overview of the application's main functionality, explaining how users interact with the system and how it processes information to generate health insights. The project has been restructured to use a modern React (Vite + TypeScript) frontend with a Node.js/Express backend, improving maintainability, performance, and developer experience compared to the original Vanilla JS implementation.
+
+## Architecture Overview
+
+The application follows a client-server architecture:
+
+- **Frontend (React + Vite + TypeScript)**: Handles user interface, form interactions, state management via hooks, and API calls. Built with component-based design for reusability and responsiveness.
+- **Backend (Node.js + Express)**: Manages API routes, business logic, AI integration with Google's Gemini model, error handling, and logging. Uses modular structure with controllers, services, and repositories.
+- **Communication**: Frontend makes HTTP requests to backend endpoints (e.g., `/api/diagnosis`). Local storage for user profiles (privacy-focused).
+- **Improvements from Vanilla JS**: 
+  - Modular components replace monolithic scripts.
+  - Custom hooks (e.g., `useApi`, `useProfile`) manage state and side effects efficiently.
+  - TypeScript ensures type safety and reduces runtime errors.
+  - Vite provides fast development with hot module replacement (HMR).
+
+Key technologies:
+- Frontend: React 18, TypeScript, Vite, Axios for API calls.
+- Backend: Express 4, Node.js 18+, Gemini AI SDK.
+- Other: LocalStorage for profiles, BMI calculations in frontend/backend.
 
 ## User Interface and Interaction
 
-The application features a user-friendly web interface that guides users through a comprehensive health assessment process:
+The React-based frontend provides a user-friendly, responsive web interface that guides users through a comprehensive health assessment process:
 
-1. **Health Profile Setup**: Users can create and save a personal health profile including:
+1. **Health Profile Setup**: Users create and save a personal health profile via the `ProfileModal` component, including:
    - Chronic conditions (diabetes, hypertension, allergies, etc.)
    - Drug allergies
    - Lifestyle factors (smoking, alcohol consumption)
    - Additional health notes
+   Profiles are stored locally using `profileService.ts` with `useProfile` hook for state management.
 
-2. **Symptom Assessment Form**: The main interface presents users with a detailed form to describe their current health status:
-   - Personal information (name, age, gender, weight, height)
-   - Symptom selection from categorized lists (general, head/neck, respiratory, digestive)
-   - Duration of symptoms
-   - Recent meal information
-   - Additional symptom details
+2. **Symptom Assessment Form**: The main interface, orchestrated by `App.tsx` and `HealthForm.tsx`, presents a multi-step form:
+   - Personal information (name, age, gender, weight, height) in `PersonalInfoForm.tsx`.
+   - Symptom selection from categorized lists (general, head/neck, respiratory, digestive) via `SymptomSelection.tsx`.
+   - Duration of symptoms and recent meal information in `AdditionalInfoForm.tsx`.
+   - Form validation and state handled by React hooks.
 
-3. **Two-Level Confirmation**: To prevent accidental submissions, the application implements a two-level confirmation process when submitting the health assessment form. When users first click the submit button, it changes to a confirmation state requiring a second click to actually submit the form.
+3. **Two-Level Confirmation**: Implemented in the submit handler of `HealthForm.tsx` to prevent accidental submissions. The submit button toggles to a confirmation state requiring a second click, using React state for UI feedback.
 
-4. **Profile Management**: Users can access and update their health profile through a dedicated settings panel.
+4. **Profile Management**: Users access and update profiles through the `ProfileModal` component, integrated with local storage.
+
+UI states are managed with dedicated components: `LoadingView.tsx` for processing, `ErrorView.tsx` for failures, and `ResultView.tsx` for outputs.
 
 ## Data Processing Flow
 
-The application follows a clear data processing flow to transform user input into actionable health insights:
+The application follows a clear data processing flow, now distributed between frontend and backend:
 
-1. **Data Collection**: The application gathers comprehensive health information from users through the web form.
+1. **Data Collection**: React forms gather comprehensive health information, validated client-side.
 
-2. **BMI Calculation**: The system automatically calculates the user's Body Mass Index (BMI) based on their height and weight inputs.
+2. **BMI Calculation**: Performed in the frontend (`HealthForm.tsx`) using height/weight inputs for immediate feedback, then included in API payload.
 
-3. **Data Preparation**: All collected information is formatted and prepared for AI analysis.
+3. **Data Preparation**: Frontend formats data using `apiService.ts` and sends via POST to backend `/api/diagnosis`.
 
-4. **AI Analysis Request**: The prepared data is sent to the backend service for AI processing.
+4. **Backend Processing**: 
+   - `diagnosis.routes.js` receives request.
+   - `diagnosis.controller.js` validates and calls `diagnosis.service.js`.
+   - Data is prepared for AI.
 
-5. **AI Analysis**: The application utilizes Google's Gemini AI model to analyze the health data and generate personalized recommendations.
+5. **AI Analysis**: Backend uses `aiConnector.service.js` to interface with Google's Gemini AI model, sending contextual prompts with user data.
 
-6. **Result Formatting**: The AI's analysis is structured into a user-friendly format.
+6. **Result Formatting**: AI response is parsed and structured in the backend service.
 
-7. **Result Presentation**: The formatted results are displayed to the user through the web interface.
+7. **Result Presentation**: Backend returns JSON; frontend renders in `ResultView.tsx` using React components.
+
+Error handling propagates from backend (`errorHandler.middleware.js`) to frontend, with retries in `useApi.ts` hook.
 
 ## AI Analysis Component
 
-The core of the application is its AI analysis engine powered by Google's Gemini AI:
+The core AI engine, now backend-hosted for security:
 
-1. **Contextual Analysis**: The AI considers all provided information including symptoms, personal health profile, BMI, and recent meals.
+1. **Contextual Analysis**: Gemini considers symptoms, profile, BMI, and meals via structured prompts in `aiConnector.service.js`.
 
-2. **Risk Assessment**: The system evaluates potential health risks based on the user's profile and symptoms.
+2. **Risk Assessment**: Evaluates risks based on user data, outputting categorized insights.
 
-3. **Personalized Recommendations**: The AI generates customized health advice considering the user's specific circumstances.
+3. **Personalized Recommendations**: Generates advice tailored to circumstances, using prompt engineering for relevance.
 
-4. **Error Handling**: The system includes retry mechanisms to ensure reliable AI communication.
+4. **Error Handling**: Backend includes retry logic and logging (`logger.js`); frontend shows user-friendly messages.
 
 ## Results Presentation
 
-Users receive comprehensive health insights through a structured results display:
+Users receive insights in `ResultView.tsx`, structured for readability:
 
-1. **Primary Assessment**: A summary analysis connecting symptoms with personal health factors.
+1. **Primary Assessment**: Summary linking symptoms to health factors.
 
-2. **Risk Evaluation**: Categorized risk assessment with explanations of how personal factors influence each risk.
+2. **Risk Evaluation**: Categorized risks with explanations influenced by profile.
 
-3. **Care Recommendations**: 
-   - Immediate actions to take
-   - General wellness advice
-   - Activity guidance (recommended and to avoid)
+3. **Care Recommendations**:
+   - Immediate actions
+   - Wellness advice
+   - Activity guidance (recommended/avoid)
 
-4. **Dietary Suggestions**: 
-   - Nutritional concepts tailored to the user's condition
+4. **Dietary Suggestions**:
+   - Tailored nutrition
    - Recommended foods by category
-   - Foods to avoid with explanations
+   - Foods to avoid with reasons
 
-5. **Warning Signs**: Important red flags users should monitor.
+5. **Warning Signs**: Red flags to monitor.
 
-6. **Important Disclaimers**: Clear statements about the limitations of AI analysis and the importance of professional medical consultation.
+6. **Important Disclaimers**: Emphasizes AI limitations and need for professional consultation, displayed prominently.
+
+Results use semantic HTML for accessibility, with responsive CSS.
 
 ## Key Benefits
 
-- **Personalized Health Insights**: Tailored recommendations based on individual health profiles
-- **Comprehensive Assessment**: Considers multiple health factors beyond just symptoms
-- **User-Friendly Interface**: Intuitive design that makes health assessment accessible
-- **Privacy Focused**: Health profiles are stored locally on the user's device
-- **Educational Value**: Helps users understand potential health connections and considerations
+- **Personalized Health Insights**: Tailored via AI and user profile.
+- **Comprehensive Assessment**: Integrates multiple factors.
+- **User-Friendly Interface**: React ensures smooth, mobile-first UX.
+- **Privacy Focused**: Profiles stored locally; no server persistence.
+- **Educational Value**: Explains health connections.
+- **Improved Maintainability**: Modular React components and Express services ease updates.
+- **Performance**: Vite HMR and async backend processing.
 
 ## Conclusion
 
-The AI Diagnosis Application provides an accessible way for individuals to gain preliminary insights into their health status. By combining user-provided information with AI analysis, it offers personalized recommendations that can help users make informed decisions about their health and wellness. The application emphasizes that its assessments are supplementary tools and not replacements for professional medical diagnosis.
+The restructured AI Diagnosis Application enhances the original Vanilla JS version with modern frontend and backend technologies, maintaining all core functionality while improving scalability and developer productivity. It provides accessible preliminary health insights, always stressing professional medical advice.

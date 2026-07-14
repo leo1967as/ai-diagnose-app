@@ -1,0 +1,124 @@
+import React from 'react'
+import { DiagnosisResult, AIAnalysis } from '../types'
+import MapComponent from './MapComponent'
+
+interface ResultViewProps {
+  result: Partial<DiagnosisResult>
+  onReset: () => void
+}
+
+const ResultView: React.FC<ResultViewProps> = ({ result, onReset }) => {
+  console.log('ResultView: Rendering with props - result:', result, 'onReset available');
+
+  if (!result) {
+    console.log('ResultView: No result provided, skipping render');
+    return (
+      <div id="result-wrapper">
+        <p style={{ textAlign: 'center', color: '#6c757d' }}>No result data available. Please try submitting again.</p>
+        <button className="main-button" onClick={onReset}>Try Again</button>
+      </div>
+    );
+  }
+
+  const { analysis = {} as any, userInfo = { name: '' }, bmi = { weight: '', height: '', value: '', category: '' } } = result;
+  const safeAnalysis = analysis as any;
+
+  const createRiskList = (risks: import('../types').RiskAnalysis[]) => {
+    if (!risks || risks.length === 0) return <p>AI ไม่พบภาวะที่เกี่ยวข้องอย่างชัดเจน</p>
+    const riskLevelMap: { [key: string]: string } = {
+      high: 'เสี่ยงสูง',
+      medium: 'เสี่ยงปานกลาง',
+      low: 'เสี่ยงน้อย',
+      info: 'ข้อมูล'
+    }
+    return risks.map((risk, index) => (
+      <div key={index} className="risk-card" data-risk={risk.riskLevel}>
+        <div className="risk-card-header">
+          <span className="risk-label" data-risk={risk.riskLevel}>
+            {riskLevelMap[risk.riskLevel] || risk.riskLevel}
+          </span>
+          <span>{risk.condition || 'ไม่ระบุ'}</span>
+        </div>
+        <p style={{margin: 0, color: '#555'}}><strong>เหตุผล:</strong> {risk.rationale || 'ไม่พบเหตุผล'}</p>
+      </div>
+    ))
+  }
+
+  const createBulletedList = (items: string[]) => {
+    if (!items || items.length === 0) return <li>ไม่มีคำแนะนำในส่วนนี้</li>
+    return items.map((item, index) => <li key={index}>{item || 'ไม่ระบุ'}</li>)
+  }
+
+  return (
+    <div id="result-wrapper">
+      <div className="result-header">
+        <h2>ผลการวิเคราะห์เบื้องต้นสำหรับคุณ {userInfo.name || 'ผู้ใช้'}</h2>
+        <p className="bmi-display">
+          น้ำหนัก: {bmi.weight || 'ไม่ระบุ'} กก. | ส่วนสูง: {bmi.height || 'ไม่ระบุ'} ซม.<br />
+          ดัชนีมวลกาย (BMI): {bmi.value || 'ไม่สามารถคำนวณ'} ({bmi.category || 'ไม่ระบุ'})
+        </p>
+      </div>
+      
+      <aside className="disclaimer-card">
+        <div className="disclaimer-icon">⚠️</div>
+        <div className="disclaimer-content">
+          <strong>ข้อควรระวังสำคัญ</strong>
+          <p>
+            {safeAnalysis.disclaimer || 'การประเมินนี้สร้างโดย AI เพื่อให้คำแนะนำเบื้องต้นเท่านั้น ไม่สามารถใช้แทนการวินิจฉัยจากแพทย์ได้ กรุณาปรึกษาบุคลากรทางการแพทย์เพื่อรับการวินิจฉัยและการรักษาที่ถูกต้อง'}
+          </p>
+        </div>
+      </aside>
+
+      <h3 className="section-title">บทวิเคราะห์หลัก</h3>
+      <div className="primary-analysis section-frame">{safeAnalysis.primaryAssessment || 'ไม่พบบทวิเคราะห์หลัก'}</div>
+
+      <h3 className="section-title">การประเมินความเสี่ยง</h3>
+      <div className="section-frame">{createRiskList(safeAnalysis.riskAnalysis || [])}</div>
+
+      <h3 className="section-title">คำแนะนำในการดูแลตัวเอง</h3>
+      <div className="section-frame">
+        <h4>สิ่งที่ควรทำทันที</h4>
+        <ul className="styled-list">{createBulletedList(safeAnalysis.personalizedCare?.immediateActions || [])}</ul>
+        <h4>การดูแลสุขภาพโดยรวม</h4>
+        <ul className="styled-list">{createBulletedList(safeAnalysis.personalizedCare?.generalWellness || [])}</ul>
+        <h4>ข้อแนะนำด้านกิจกรรม</h4>
+        <p>
+          <strong>ที่แนะนำ:</strong> {safeAnalysis.personalizedCare?.activityGuidance?.recommended?.join(', ') || 'ไม่มีคำแนะนำเฉพาะ'}
+        </p>
+        <p>
+          <strong>ที่ควรเลี่ยง:</strong> {safeAnalysis.personalizedCare?.activityGuidance?.toAvoid?.join(', ') || 'ไม่มีคำแนะนำเฉพาะ'}
+        </p>
+      </div>
+
+      <h3 className="section-title">คำแนะนำด้านโภชนาการ</h3>
+      <p>
+        <i>{safeAnalysis.dietaryRecommendations?.concept || 'เน้นอาหารที่ย่อยง่ายและมีประโยชน์'}</i>
+      </p>
+      <div className="diet-recommendations section-frame">
+        <div>
+          <strong>อาหารที่แนะนำ:</strong>
+          <ul>
+            <li><strong>อาหารหลัก:</strong> {safeAnalysis.dietaryRecommendations?.foodsToEat?.mainDishes?.join(', ') || 'ไม่มี'}</li>
+            <li><strong>ของว่าง/ผลไม้:</strong> {safeAnalysis.dietaryRecommendations?.foodsToEat?.snacksAndFruits?.join(', ') || 'ไม่มี'}</li>
+            <li><strong>เครื่องดื่ม:</strong> {safeAnalysis.dietaryRecommendations?.foodsToEat?.drinks?.join(', ') || 'ไม่มี'}</li>
+          </ul>
+        </div>
+        <div>
+          <strong>อาหารที่ควรหลีกเลี่ยง:</strong>
+          <ul>{createBulletedList(safeAnalysis.dietaryRecommendations?.foodsToAvoid || [])}</ul>
+        </div>
+      </div>
+
+      <h3 className="section-title">สัญญาณอันตราย</h3>
+      <ul className="styled-list red-flags section-frame">{createBulletedList(safeAnalysis.redFlags || [])}</ul>
+
+      <MapComponent />
+
+      <button id="reset-button" className="main-button" onClick={onReset}>
+        ประเมินอีกครั้ง
+      </button>
+    </div>
+  )
+}
+
+export default ResultView
